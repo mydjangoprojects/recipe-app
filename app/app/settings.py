@@ -54,7 +54,6 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'core',
-    'user',
     'recipe',
 ]
 
@@ -72,12 +71,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AUTH_USER_MODEL = 'core.User'
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'user.serializers.UserSerializer',
-    'LOGIN_SERIALIZER': 'user.serializers.LoginSerializer',
+    'USER_DETAILS_SERIALIZER': 'core.api.serializers.UserSerializer',
+    'LOGIN_SERIALIZER': 'core.api.serializers.LoginSerializer',
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'user.serializers.RegisterSerializer',
+    'REGISTER_SERIALIZER': 'core.api.serializers.RegisterSerializer',
 }
 
 REST_FRAMEWORK = {

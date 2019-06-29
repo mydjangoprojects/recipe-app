@@ -7,7 +7,7 @@ Recipe MPA (Multiple-Page Application).
 Multiple-Page Application for creating, rating and sharing your favourite recipes. Inspired by [Recipe-App-API](https://github.com/mydjangoprojects/recipe-app-api)
 
 ## Build Status
-[![Build Status](https://travis-ci.org/mydjangoprojects/recipe-app-api.svg?branch=master)](https://travis-ci.org/mydjangoprojects/recipe-app-api)
+[![Build Status](https://travis-ci.org/mydjangoprojects/recipe-mpa.svg?branch=master)](https://travis-ci.org/mydjangoprojects/recipe-mpa)
 
 ## Getting Started
 
@@ -41,11 +41,11 @@ This will test every endpoint and core functionality. And will apply check for c
 
 1. Open the terminal and clone the repository:
 ```
-$ git clone git@github.com:mydjangoprojects/recipe-app-api.git
+$ git clone git@github.com:mydjangoprojects/recipe-mpa.git
 ```
 2. Change the directory and build the docker image by executing:
 ```
-$ cd recipe-app-api
+$ cd recipe-mpa
 $ docker-compose build
 ```
 
@@ -56,7 +56,7 @@ If you want to be more secure change every occurrence of __supersecretpassword__
 ## Running
 
 ```
-$ cd recipe-app-api
+$ cd recipe-mpa
 $ docker-compose up
 ```
 
@@ -76,7 +76,7 @@ and integrate systems more effectively.
 
 * **Nikolay Nedkov** - [Psykepro](https://github.com/Psykepro)
 
-See also the list of [contributors](https://github.com/mydjangoprojects/recipe-app-api/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/mydjangoprojects/recipe-mpa/graphs/contributors) who participated in this project.
 
 
 ## Acknowledgments
@@ -85,4 +85,4 @@ See also the list of [contributors](https://github.com/mydjangoprojects/recipe-a
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/mydjangoprojects/recipe-app-api/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/mydjangoprojects/recipe-mpa/blob/master/LICENSE) file for details

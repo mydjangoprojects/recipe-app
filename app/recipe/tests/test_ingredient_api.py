@@ -5,12 +5,12 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import Ingredient, Recipe
+from recipe.models import Ingredient, Recipe
 
-from recipe.serializers import IngredientSerializer
+from recipe.api.serializers import IngredientSerializer
 
 
-INGREDIENTS_URL = reverse('recipe:ingredient-list')
+INGREDIENTS_URL = reverse('recipe.api:ingredient-list')
 
 
 class PublicIngredientsAPITests(TestCase):

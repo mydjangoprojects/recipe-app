@@ -10,22 +10,22 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import Recipe, Tag, Ingredient
+from recipe.models import Recipe, Tag, Ingredient
 
-from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
+from recipe.api.serializers import RecipeSerializer, RecipeDetailSerializer
 
 
-RECIPES_URL = reverse('recipe:recipe-list')
+RECIPES_URL = reverse('recipe.api:recipe-list')
 
 
 def image_upload_url(recipe_id):
     """Return URL for recipe image upload"""
-    return reverse('recipe:recipe-upload-image', args=[recipe_id])
+    return reverse('recipe.api:recipe-upload-image', args=[recipe_id])
 
 
 def detail_url(recipe_id):
     """Return recipe detail URL"""
-    return reverse('recipe:recipe-detail', args=[recipe_id])
+    return reverse('recipe.api:recipe-detail', args=[recipe_id])
 
 
 def sample_tag(user, name='Main course'):

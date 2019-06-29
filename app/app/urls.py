@@ -19,11 +19,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.views import LoginView as BaseLoginView
 
-from user.views import LoginView
+from core.api.view_sets import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/recipe/', include('recipe.urls')),
+    path('recipe/', include('recipe.urls')),
+    path('api/recipe/', include('recipe.api.urls')),
     path('api/rest-auth/', include('rest_auth.urls')),
     path('api/rest-auth/login/', LoginView.as_view(), name='rest_login'),
     path('api/rest-auth/registration/', include('rest_auth.registration.urls'),

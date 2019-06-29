@@ -3,7 +3,7 @@ from rest_framework import generics, authentication, permissions
 from rest_auth.registration.views import RegisterView as BaseRegisterView,\
                                          LoginView as BaseLoginView
 
-from .serializers import UserSerializer
+from core.api.serializers import UserSerializer
 from core.models import User
 
 

@@ -15,7 +15,7 @@ services:
              
     environment:
       - DB_HOST=db
-      - DB_NAME=app
+      - DB_NAME=recipe_mpa
       - DB_USER=postgres
       - DB_PASS=supersecretpassword
       - STATIC_ROOT=/vol/web/static
@@ -26,6 +26,6 @@ services:
   db:
     image: postgres:10-alpine
     environment:
-      - POSTGRES_DB=app
+      - POSTGRES_DB=recipe_mpa
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=supersecretpassword

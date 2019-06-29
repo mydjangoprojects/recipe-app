@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from core import models
+from recipe.models import Tag, Recipe, Ingredient, recipe_image_file_path
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
@@ -55,7 +55,7 @@ class ModuleTests(TestCase):
 
     def test_tag_str(self):
         """Test the Tag string representation"""
-        tag = models.Tag.objects.create(
+        tag = Tag.objects.create(
             user=sample_user(),
             name='Vegan'
         )
@@ -64,7 +64,7 @@ class ModuleTests(TestCase):
 
     def test_ingredient_str(self):
         """Test the Ingredient string representation"""
-        ingredient = models.Ingredient.objects.create(
+        ingredient = Ingredient.objects.create(
             user=sample_user(),
             name='Cucumber'
         )
@@ -73,7 +73,7 @@ class ModuleTests(TestCase):
 
     def test_recipe_str(self):
         """Test the Recipe string representation"""
-        recipe = models.Recipe.objects.create(
+        recipe = Recipe.objects.create(
             user=sample_user(),
             title='Steak and mushroom sauce',
             time_minutes=5,
@@ -88,7 +88,7 @@ class ModuleTests(TestCase):
         uuid = 'test-uuid'
         mock_uuid.return_value = uuid
 
-        file_path = models.recipe_image_file_path(None, 'myimage.jpg')
+        file_path = recipe_image_file_path(None, 'myimage.jpg')
 
         exp_path = f'uploads/recipe/{uuid}.jpg'
         self.assertEqual(file_path, exp_path)
@@ -100,4 +100,4 @@ class ModuleTests(TestCase):
         mock_uuid.return_value = uuid
 
         payload = {'instance': None, 'filename': 'myimage'}
-        self.assertRaises(ValueError, models.recipe_image_file_path, **payload)
+        self.assertRaises(ValueError, recipe_image_file_path, **payload)
