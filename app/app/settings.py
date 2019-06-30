@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+AUTH_USER_MODEL = 'core.User'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -68,7 +68,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 OLD_PASSWORD_FIELD_ENABLED = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-AUTH_USER_MODEL = 'core.User'
+
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'core.api.serializers.UserSerializer',
@@ -79,14 +79,20 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'core.api.serializers.RegisterSerializer',
 }
 
+# Authentication / Authorization Related Configuration
+
 REST_FRAMEWORK = {
    'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.SessionAuthentication',
        'rest_framework.authentication.TokenAuthentication',
    ),
    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
    ),
 }
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Django Site's Configuration
 SITE_ID = 1
@@ -106,7 +112,7 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.path.dirname(__file__), 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

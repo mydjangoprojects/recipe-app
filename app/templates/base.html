@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="navbar-fixed">
+        <nav class="green">
+            <div class="nav-wrapper green">
+                <a href="" class="brand-logo center">Recipe Web App</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </footer>
+</body>
+</html>

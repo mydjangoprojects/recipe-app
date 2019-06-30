@@ -1,5 +1,6 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
+from django.contrib.auth.models import BaseUserManager, \
     PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser
 from django.utils.translation import gettext as _
 from django.db import models
 
@@ -21,7 +22,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_staffuser(self, email, name, password=None, **extra_fields):
+    def create_staffuser(self, email, password=None, **extra_fields):
         """Creates and saves a new staff user"""
 
         user = self.create_user(email, password=password, **extra_fields)
@@ -41,15 +42,21 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """Custom user model that supports using email instead of username"""
+    """Custom user model that supports sign in and sign up using
+       email instead of username"""
     username = None
     email = models.EmailField(_('Email Address'), max_length=255, unique=True)
-    name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
 
     def __str__(self):
         return self.email

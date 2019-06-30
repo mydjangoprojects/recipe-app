@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Recipe WEB App{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <div class="row">
+    <h1>Hi {{ user.full_name }}!</h1>
+  </div>
+  <div class="row">
+    <div>
+      <h1>Boilerplate</h1>
+    </div>
+  </div>
+  <div class="col-sm-2"><a href="{% url 'logout'  %}"><button class="btn btn-primary btn-lg">Logout</button></a></div>
+{% else %}
+  <h3>You are not logged in</h3>
+    <a href="{% url 'login'  %}" class="btn green">
+      Login
+    </a>
+    <a href="{% url 'signup'  %}" class="btn green">
+      SignUp
+    </a>
+{% endif %}
+{% endblock %}

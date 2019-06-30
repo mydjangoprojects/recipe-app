@@ -1,17 +1,23 @@
-from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib import admin
 from django.utils.translation import gettext as _
+from django.contrib.auth import get_user_model
 
-from core.models import User
-from recipe.models import Tag, Ingredient, Recipe
+from .forms import CustomUserChangeForm, CustomUserCreationForm
+
+
+User = get_user_model()
 
 
 class UserAdmin(BaseUserAdmin):
+    form = CustomUserChangeForm
+    add_form = CustomUserCreationForm
     ordering = ['id']
-    list_display = ['email', 'name']
+    list_display = ['email', 'first_name', 'last_name']
+    model = User
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('name',)}),
+        (_('Personal Info'), {'fields': ('first_name', 'last_name',)}),
         (
             _('Permissions'),
             {'fields': ('is_active', 'is_staff', 'is_superuser')}
@@ -27,6 +33,3 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Tag)
-admin.site.register(Ingredient)
-admin.site.register(Recipe)

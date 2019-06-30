@@ -19,15 +19,20 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.views import LoginView as BaseLoginView
 
+from django.views.generic import TemplateView
+
 from core.api.view_sets import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('recipe/', include('recipe.urls')),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('api/recipe/', include('recipe.api.urls')),
     path('api/rest-auth/', include('rest_auth.urls')),
     path('api/rest-auth/login/', LoginView.as_view(), name='rest_login'),
     path('api/rest-auth/registration/', include('rest_auth.registration.urls'),
          name='rest_register'),
-    path('login/', BaseLoginView.as_view(), name='login')
+    path('login/', BaseLoginView.as_view(), name='login'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('core.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

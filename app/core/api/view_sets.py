@@ -3,8 +3,10 @@ from rest_framework import generics, authentication, permissions
 from rest_auth.registration.views import RegisterView as BaseRegisterView,\
                                          LoginView as BaseLoginView
 
-from core.api.serializers import UserSerializer
-from core.models import User
+from .serializers import UserSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
