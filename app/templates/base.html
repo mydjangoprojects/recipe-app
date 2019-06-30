@@ -10,15 +10,33 @@
     <!-- HEADER -->
     <div class="navbar-fixed">
         <nav class="green">
-            <div class="nav-wrapper green">
-                <a href="" class="brand-logo center">Recipe Web App</a>
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">About</a></li>
-                </ul>
+            <div class="container">
+                <div class="nav-wrapper green">
+                    <a href="#" class="brand-logo center">Recipe Web App</a>
+                    <a href="#" data-target="mobile-nav"
+                       class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+
+                    <ul class="left hide-on-med-and-down">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                    </ul>
+
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </div>
+
+    <!-- SIDENAV-->
+    <ul id="mobile-nav" class="sidenav green">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'logout' %}">Log Out</a></li>
+    </ul>
 
     <!-- CONTAINER -->
     <div class="container">
@@ -30,6 +48,24 @@
     <footer id="footer">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            // Sidenav
+            const sideNav = document.querySelector('.sidenav');
+            if (sideNav) {
+                M.Sidenav.init(sideNav, {});
+            }
+
+            // Slider
+            const slider = document.querySelector('.slider');
+            if (slider){
+                M.Slider.init(slider, {
+                    indicators: false,
+                    height: 500,
+                    transition: 500,
+                    interval: 6000
+                });
+            }
+        </script>
     </footer>
 </body>
 </html>

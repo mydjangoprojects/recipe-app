@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Recipe WEB App{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+  <div class="row">
+    <div>
+      <h1>About Us</h1>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Consequatur cumque dolore dolorum eum id inventore ipsam
+        laborum pariatur tempore vel.</p>
+    </div>
+  </div>
+
+{% else %}
+  <h3>You are not logged in</h3>
+    <a href="{% url 'login'  %}" class="btn green">
+      Login
+    </a>
+    <a href="{% url 'signup'  %}" class="btn green">
+      SignUp
+    </a>
+{% endif %}
+{% endblock %}
