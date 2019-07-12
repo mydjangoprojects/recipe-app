@@ -121,6 +121,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
+            # 'libraries': {
+            #     'param_replace': 'core.templatetags.param_replace'
+            # }
         },
     },
 ]
@@ -189,5 +193,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
+
 STATIC_ROOT = os.environ.get('STATIC_ROOT')
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT')
+

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load param_replace %}
+
+{% block title %}Tags - Recipe WEB App{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col s12">
+    <h1 class="center">All Tags</h1>
+
+
+    <div class="center">
+       <a href="{% url 'recipe:tag_create' %}"
+        class="btn waves-effect waves-light btn-color">
+          Create Tag
+          <i class="material-icons right">add</i>
+       </a>
+    </div>
+  </div>
+</div>
+
+{% if list_objects %}
+
+    {% for tag in list_objects %}
+      <div class="row">
+        <div class="col s12">
+          <div class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <i class="material-icons left circle">local_offer</i>
+                <p>{{ tag.name }}</p>
+              </div>
+
+              <div class="card-action right-align">
+                <a class="waves-effect waves-light btn btn-color"
+                     href="{% url 'recipe:tag_detail' pk=tag.id %}">
+                    Details
+                </a>
+              </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+    {% if page_obj.has_other_pages %}
+       <div class="container">
+         <ul class="pagination">
+          <!-- PREVIOUS PAGE -->
+
+          {% if page_obj.has_previous and page_obj.previous_page_number != 0 %}
+            <li>
+              <a href="?{% param_replace page=page_obj.previous_page_number %}">
+                <i class="material-icons">chevron_left</i>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#">
+                <i class="material-icons">chevron_left</i>
+              </a>
+            </li>
+          {% endif %}
+
+          <!-- PAGE NUMBERS -->
+          {% for i in page_range %}
+            {% if page_obj.number == i %}
+              <li class="active btn-color">
+                <a href="#">{{ i }}</a>
+              </li>
+            {% else %}
+              <li class="waves-effect">
+                <a href="?{% param_replace page=i %}">
+                  {{ i }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+
+        <!-- NEXT PAGE -->
+          {% if page_obj.has_next %}
+            <li>
+              <a href="?{% param_replace page=page_obj.next_page_number %}">
+                <i class="material-icons">chevron_right</i>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#">
+                <i class="material-icons">chevron_right</i>
+              </a>
+            </li>
+          {% endif %}
+         </ul>
+       </div>
+    {% endif %}
+  {% endif %}
+
+
+{% else %}
+<h1>Not Results</h1>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Tag Details</h1>
+
+  <p>Name: {{object.name}}</p>
+  <p>Created By: {{ object.user.full_name }} ({{ object.user.email }})</p>
+  <a href="{% url 'recipe:tag_update' pk=object.id %}" class="btn btn-color">Edit
+    <i class="material-icons right">edit</i>
+  </a>
+{% endblock %}

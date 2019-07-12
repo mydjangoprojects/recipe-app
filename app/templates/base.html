@@ -1,18 +1,21 @@
 <!DOCTYPE html>
+{% load static from staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'common-styles.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Average&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- HEADER -->
-    <div class="navbar-fixed">
-        <nav class="green">
+    <div class="navbar-fixed average-font">
+        <nav class="main-color">
             <div class="container">
                 <div class="nav-wrapper green">
-                    <a href="#" class="brand-logo center">Recipe Web App</a>
+                    <a href="#" class="brand-logo center average-font">Recipe Web App</a>
                     <a href="#" data-target="mobile-nav"
                        class="sidenav-trigger">
                         <i class="material-icons">menu</i>
@@ -21,31 +24,36 @@
                     <ul class="left hide-on-med-and-down">
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'recipe:tag_list' %}">Tags</a></li>
                     </ul>
-
+                    {% if user.is_authenticated %}
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{% url 'logout' %}">Log Out</a></li>
                     </ul>
+                    {% endif %}
                 </div>
             </div>
         </nav>
     </div>
 
     <!-- SIDENAV-->
-    <ul id="mobile-nav" class="sidenav green">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="{% url 'logout' %}">Log Out</a></li>
+    <ul id="mobile-nav" class="sidenav main-color average-font">
+        <li class="btn-color"><a href="{% url 'home' %}">Home</a></li>
+        <li class="btn-color"><a href="{% url 'about' %}">About</a></li>
+        <li class="btn-color"><a href="{% url 'recipe:tag_list' %}">Tags</a></li>
+        {% if user.is_authenticated %}
+        <li class="btn-color"><a href="{% url 'logout' %}">Log Out</a></li>
+        {% endif %}
     </ul>
 
     <!-- CONTAINER -->
-    <div class="container">
+    <div class="container average-font">
         {% block content %}
         {% endblock %}
     </div>
 
     <!-- FOOTER -->
-    <footer id="footer">
+    <footer id="footer" class="average-font">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script>

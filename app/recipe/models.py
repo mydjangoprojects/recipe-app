@@ -26,6 +26,14 @@ class Tag(models.Model):
         on_delete=models.CASCADE,
     )
 
+    class Meta:
+        ordering = ['id']
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:
+            obj.user = request.user
+        super(Tag, self).save_model(request, obj, form, change)
+
     def __str__(self):
         return self.name
 
