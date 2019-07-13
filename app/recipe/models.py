@@ -25,9 +25,11 @@ class Tag(models.Model):
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    created_on = models.DateTimeField(verbose_name="Creation Date",
+                                      auto_now_add=True)
 
     class Meta:
-        ordering = ['id']
+        ordering = ['-id']
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:
@@ -45,6 +47,8 @@ class Ingredient(models.Model):
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    created_on = models.DateTimeField(verbose_name="Creation Date",
+                                      auto_now_add=True)
 
     def __str__(self):
         return self.name
@@ -63,6 +67,8 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField('Ingredient')
     tags = models.ManyToManyField('Tag')
     image = models.ImageField(null=True, upload_to=recipe_image_file_path)
+    created_on = models.DateTimeField(verbose_name="Creation Date",
+                                      auto_now_add=True)
 
     def __str__(self):
         return self.title
