@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1>Ingredient Delete</h1>
+  <form  method="post">
+    {% csrf_token %}
+    <h3>Are you sure you want to delete ingredient: {{ object.name }} ?</h3>
+    <button type="submit" class="btn waves-effect waves-light red" name="action">Delete
+      <i class="material-icons right">delete</i>
+    </button>
+  </form>
+
+{% endblock %}

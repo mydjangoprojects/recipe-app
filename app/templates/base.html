@@ -25,6 +25,7 @@
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'about' %}">About</a></li>
                         <li><a href="{% url 'recipe:tag_list' %}">Tags</a></li>
+                        <li><a href="{% url 'recipe:ingredient_list' %}">Ingredients</a></li>
                     </ul>
                     {% if user.is_authenticated %}
                     <ul class="right hide-on-med-and-down">
@@ -41,6 +42,7 @@
         <li class="btn-color"><a href="{% url 'home' %}">Home</a></li>
         <li class="btn-color"><a href="{% url 'about' %}">About</a></li>
         <li class="btn-color"><a href="{% url 'recipe:tag_list' %}">Tags</a></li>
+        <li class="btn-color"><a href="{% url 'recipe:ingredient_list' %}">Ingredients</a></li>
         {% if user.is_authenticated %}
         <li class="btn-color"><a href="{% url 'logout' %}">Log Out</a></li>
         {% endif %}
