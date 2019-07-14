@@ -44,11 +44,12 @@ class PrivateTagsApiTests(TestCase):
         Tag.objects.create(user=self.user, name='Dessert')
 
         res = self.client.get(TAGS_URL)
+        results = list(map(dict, res.data['results']))
 
         tags = Tag.objects.all().order_by('-name')
         serializer = TagSerializer(tags, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(results, serializer.data)
 
     def test_tags_limited_to_user(self):
         """Test that tags returned are for the authenticated user"""
@@ -60,10 +61,11 @@ class PrivateTagsApiTests(TestCase):
         tag = Tag.objects.create(user=self.user, name='Comfort Food')
 
         res = self.client.get(TAGS_URL)
+        results = list(map(dict, res.data['results']))
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data[0]['name'], tag.name)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['name'], tag.name)
 
     def test_create_tag_successful(self):
         """Test creating a new tag"""
@@ -99,11 +101,12 @@ class PrivateTagsApiTests(TestCase):
         recipe.tags.add(tag1)
 
         res = self.client.get(TAGS_URL, {'assigned_only': 1})
+        results = list(map(dict, res.data['results']))
 
         serializer1 = TagSerializer(tag1)
         serializer2 = TagSerializer(tag2)
-        self.assertIn(serializer1.data, res.data)
-        self.assertNotIn(serializer2.data, res.data)
+        self.assertIn(serializer1.data, results)
+        self.assertNotIn(serializer2.data, results)
 
     def test_retrieve_tags_assigned_unique(self):
         """Test filtering tags by assigned returns unique items"""
@@ -125,7 +128,8 @@ class PrivateTagsApiTests(TestCase):
         recipe2.tags.add(tag)
 
         res = self.client.get(TAGS_URL, {'assigned_only': 1})
+        results = list(map(dict, res.data['results']))
 
         serializer = TagSerializer(tag)
-        self.assertEqual(len(res.data), 1)
-        self.assertIn(serializer.data, res.data)
+        self.assertEqual(len(results), 1)
+        self.assertIn(serializer.data, results)

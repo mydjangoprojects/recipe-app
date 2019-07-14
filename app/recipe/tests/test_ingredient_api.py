@@ -6,7 +6,6 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from recipe.models import Ingredient, Recipe
-
 from recipe.api.serializers import IngredientSerializer
 
 
@@ -43,11 +42,12 @@ class PrivateIngredientsAPITests(TestCase):
         Ingredient.objects.create(user=self.user, name='Kale')
 
         res = self.client.get(INGREDIENTS_URL)
+        results = list(map(dict, res.data['results']))
 
         ingredients = Ingredient.objects.all().order_by('-name')
         serializer = IngredientSerializer(ingredients, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(results, serializer.data)
 
     def test_ingredients_limited_to_user(self):
         """Test that ingredients for the authenticated user are returned"""
@@ -59,10 +59,11 @@ class PrivateIngredientsAPITests(TestCase):
         ingredient = Ingredient.objects.create(user=self.user, name='Tumeric')
 
         res = self.client.get(INGREDIENTS_URL)
+        results = list(map(dict, res.data['results']))
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data[0]['name'], ingredient.name)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['name'], ingredient.name)
 
     def test_create_ingredient_successful(self):
         """Test create a new ingredient"""
@@ -95,11 +96,12 @@ class PrivateIngredientsAPITests(TestCase):
         recipe.ingredients.add(ingredient1)
 
         res = self.client.get(INGREDIENTS_URL, {'assigned_only': 1})
+        results = list(map(dict, res.data['results']))
 
         serializer1 = IngredientSerializer(ingredient1)
         serializer2 = IngredientSerializer(ingredient2)
-        self.assertIn(serializer1.data, res.data)
-        self.assertNotIn(serializer2.data, res.data)
+        self.assertIn(serializer1.data, results)
+        self.assertNotIn(serializer2.data, results)
 
     def test_retrieve_ingredients_assigned_unique(self):
         """Test filtering ingredients by assinged returns unique items"""
@@ -121,7 +123,8 @@ class PrivateIngredientsAPITests(TestCase):
         recipe2.ingredients.add(ingredient)
 
         res = self.client.get(INGREDIENTS_URL, {'assigned_only': 1})
+        results = list(map(dict, res.data['results']))
 
         serializer = IngredientSerializer(ingredient)
-        self.assertEqual(len(res.data), 1)
-        self.assertIn(serializer.data, res.data)
+        self.assertEqual(len(results), 1)
+        self.assertIn(serializer.data, results)

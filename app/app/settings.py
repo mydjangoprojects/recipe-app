@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+
 AUTH_USER_MODEL = 'core.User'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -26,7 +26,6 @@ SECRET_KEY = ')^4w1t+x0q=kqp4y5=gmr_+=xjphs%#0n)q6_f$=+rbaweb-y!'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,7 +39,6 @@ DJANGO_APPS = [
     'django.contrib.sites',
 ]
 
-
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
@@ -50,7 +48,6 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'rest_auth.registration',
 ]
-
 
 LOCAL_APPS = [
     'core',
@@ -69,7 +66,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 OLD_PASSWORD_FIELD_ENABLED = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'core.api.serializers.UserSerializer',
     'LOGIN_SERIALIZER': 'core.api.serializers.LoginSerializer',
@@ -82,13 +78,15 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 # Authentication / Authorization Related Configuration
 
 REST_FRAMEWORK = {
-   'DEFAULT_AUTHENTICATION_CLASSES': (
-       'rest_framework.authentication.SessionAuthentication',
-       'rest_framework.authentication.TokenAuthentication',
-   ),
-   'DEFAULT_PERMISSION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-   ),
+    ),
+    'DEFAULT_PAGINATION_CLASS':
+        'core.api.pagination.StandardPageNumberPagination',
 }
 
 LOGIN_REDIRECT_URL = '/'
@@ -121,16 +119,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-
-            # 'libraries': {
-            #     'param_replace': 'core.templatetags.param_replace'
-            # }
         },
     },
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -163,14 +156,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 AUTHENTICATION_BACKENDS = (
-     # Needed to login by username in Django admin, regardless of `allauth`
-     "django.contrib.auth.backends.ModelBackend",
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
 
-     # `allauth` specific authentication methods, such as login by e-mail
-     "allauth.account.auth_backends.AuthenticationBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 # Internationalization
@@ -186,7 +177,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -199,4 +189,3 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = os.environ.get('STATIC_ROOT')
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT')
-

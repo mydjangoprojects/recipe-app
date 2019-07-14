@@ -25,9 +25,7 @@ class PaginatedListView(generic.ListView):
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
-
         queryset = self.queryset
-
         objects, page_range = self.initialize_paginator(queryset)
 
         # Context Update

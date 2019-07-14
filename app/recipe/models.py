@@ -20,6 +20,10 @@ def recipe_image_file_path(instance, filename):
 
 class Tag(models.Model):
     """Tag to be used for a recipe"""
+
+    class Meta:
+        ordering = ['-id']
+
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
@@ -27,9 +31,6 @@ class Tag(models.Model):
     )
     created_on = models.DateTimeField(verbose_name="Creation Date",
                                       auto_now_add=True)
-
-    class Meta:
-        ordering = ['-id']
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:
@@ -42,6 +43,10 @@ class Tag(models.Model):
 
 class Ingredient(models.Model):
     """Ingredient to be used in a recipe"""
+
+    class Meta:
+        ordering = ['-id']
+
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
@@ -56,6 +61,10 @@ class Ingredient(models.Model):
 
 class Recipe(models.Model):
     """Recipe object"""
+
+    class Meta:
+        ordering = ['-id']
+
     title = models.CharField(max_length=255)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,

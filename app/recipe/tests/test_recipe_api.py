@@ -76,16 +76,17 @@ class PrivateRecipeApiTests(TestCase):
         self.client.force_authenticate(self.user)
 
     def test_retrieve_recipes(self):
-        """Test retrievign a list of recipes"""
+        """Test retrieving a list of recipes"""
         sample_recipe(user=self.user)
         sample_recipe(user=self.user)
 
         res = self.client.get(RECIPES_URL)
+        results = list(map(dict, res.data['results']))
 
-        recipes = Recipe.objects.all().order_by('-id')
+        recipes = Recipe.objects.all()
         serializer = RecipeSerializer(recipes, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(results, serializer.data)
 
     def test_recipes_limited_to_user(self):
         """Test retrieving recipes for user"""
@@ -97,12 +98,13 @@ class PrivateRecipeApiTests(TestCase):
         sample_recipe(user=self.user)
 
         res = self.client.get(RECIPES_URL)
+        results = list(map(dict, res.data['results']))
 
         recipes = Recipe.objects.filter(user=self.user)
         serializer = RecipeSerializer(recipes, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results, serializer.data)
 
     def test_view_recipe_detail(self):
         """Test viewing a recipe detail"""
@@ -164,6 +166,7 @@ class PrivateRecipeApiTests(TestCase):
         }
 
         res = self.client.post(RECIPES_URL, payload)
+
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
         ingredients = recipe.ingredients.all()
@@ -220,13 +223,14 @@ class PrivateRecipeApiTests(TestCase):
             RECIPES_URL,
             {'tags': f'{tag1.id},{tag2.id}'}
         )
+        results = list(map(dict, res.data['results']))
 
         serializer1 = RecipeSerializer(recipe1)
         serializer2 = RecipeSerializer(recipe2)
         serializer3 = RecipeSerializer(recipe3)
-        self.assertIn(serializer1.data, res.data)
-        self.assertIn(serializer2.data, res.data)
-        self.assertNotIn(serializer3.data, res.data)
+        self.assertIn(serializer1.data, results)
+        self.assertIn(serializer2.data, results)
+        self.assertNotIn(serializer3.data, results)
 
     def test_filter_recipes_by_ingredients(self):
         """Test returning recipes with specific ingredients"""
@@ -242,13 +246,14 @@ class PrivateRecipeApiTests(TestCase):
             RECIPES_URL,
             {'ingredients': f'{ingredient1.id},{ingredient2.id}'}
         )
+        results = list(map(dict, res.data['results']))
 
         serializer1 = RecipeSerializer(recipe1)
         serializer2 = RecipeSerializer(recipe2)
         serializer3 = RecipeSerializer(recipe3)
-        self.assertIn(serializer1.data, res.data)
-        self.assertIn(serializer2.data, res.data)
-        self.assertNotIn(serializer3.data, res.data)
+        self.assertIn(serializer1.data, results)
+        self.assertIn(serializer2.data, results)
+        self.assertNotIn(serializer3.data, results)
 
 
 class RecipeImageUploadTests(TestCase):
