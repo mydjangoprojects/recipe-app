@@ -17,8 +17,11 @@ from .forms.ingredient_forms import IngredientModelForm
 class TagUserPassesTestMixin(UserPassesTestMixin):
     def test_func(self):
         tag = Tag.objects.get(pk=self.kwargs['pk'])
-        if tag.user.id != self.request.user.id:
-            return False
+        req_user = self.request.user
+
+        if not req_user.is_staff and not req_user.is_superuser:
+            if tag.user.id != req_user.id:
+                return False
 
         return True
 
@@ -72,8 +75,11 @@ class IngredientUserPassesTestMixin(UserPassesTestMixin):
 
     def test_func(self):
         ingredient = Ingredient.objects.get(pk=self.kwargs['pk'])
-        if ingredient.user.id != self.request.user.id:
-            return False
+        req_user = self.request.user
+
+        if not req_user.is_staff and not req_user.is_superuser:
+            if ingredient.user.id != req_user.id:
+                return False
 
         return True
 

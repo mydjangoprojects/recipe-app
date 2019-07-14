@@ -59,6 +59,23 @@ class PrivateTagViewsTests(TestCase):
 
         self.tag = Tag.objects.create(name='First Tag', user=self.user)
 
+    def login_as_superuser(self):
+        """Utility function to login as superuser"""
+        self.superuser = get_user_model().objects.create_superuser(
+            'superuser@domain.com',
+            'testpass1'
+        )
+        self.client.force_login(self.superuser)
+
+    def login_as_another_user(self):
+        """Utility function to login as another user.
+           Which isn't the creator of the Tag"""
+        self.another_user = get_user_model().objects.create_user(
+            'another_user@domain.com',
+            'testpass1'
+        )
+        self.client.force_login(self.another_user)
+
     def test_tag_list_GET(self):
         """Test retrieving List of Tags."""
         response = self.client.get(TAG_LIST_URL)
@@ -84,6 +101,46 @@ class PrivateTagViewsTests(TestCase):
 
     def test_tag_delete_GET(self):
         """Test retrieving Delete of Tag."""
+        url = url_by_action_and_pk('delete', self.tag.id)
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTemplateUsed(response, 'tag/tag_delete.html')
+
+    def test_tag_update_GET_forbidden_for_another_user(self):
+        """Test retrieving Update of Tag is forbidden.
+           For user which isn't the creator of the Tag."""
+        self.login_as_another_user()
+
+        url = url_by_action_and_pk('update', self.tag.id)
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_tag_delete_GET_forbidden_for_another_user(self):
+        """Test retrieving Delete of Tag is forbidden.
+           For user which isn't the creator of the Tag."""
+        self.login_as_another_user()
+
+        url = url_by_action_and_pk('delete', self.tag.id)
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_tag_update_GET_always_accessible_for_superuser(self):
+        """Test retrieving Update of Tag is always accessible for superuser."""
+        self.login_as_superuser()
+
+        url = url_by_action_and_pk('update', self.tag.id)
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTemplateUsed(response, 'tag/tag_update.html')
+
+    def test_tag_delete_GET_always_accessible_for_superuser(self):
+        """Test retrieving Delete of Tag is accessible always for superuser."""
+        self.login_as_superuser()
+
         url = url_by_action_and_pk('delete', self.tag.id)
         response = self.client.get(url)
 
