@@ -27,3 +27,13 @@
   align-items: center;
   justify-content: center;
 }
+
+.list-img {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.detail-img {
+    max-width: 350px;
+    max-height: 350px;
+}

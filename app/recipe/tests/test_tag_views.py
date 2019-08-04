@@ -8,7 +8,7 @@ from recipe.models import Tag
 TAG_LIST_URL = reverse('recipe:tag_list')
 
 
-def url_by_action_and_pk(action, pk=1):
+def crud_url_by_action_and_pk(action, pk=1):
     """Return Tag URL by Action and PK"""
     return reverse(f'recipe:tag_{action}', args=[pk])
 
@@ -26,21 +26,21 @@ class PublicTagViewsTests(TestCase):
 
     def test_tag_detail_redirects_unauthenticated(self):
         """Test that Tag Detail view redirects unauthenticated users."""
-        url = url_by_action_and_pk('detail')
+        url = crud_url_by_action_and_pk('detail')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
 
     def test_tag_update_redirects_unauthenticated(self):
         """Test that Tag Update view redirects unauthenticated users."""
-        url = url_by_action_and_pk('update')
+        url = crud_url_by_action_and_pk('update')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
 
     def test_tag_delete_redirects_unauthenticated(self):
         """Test that Tag Delete view redirects unauthenticated users."""
-        url = url_by_action_and_pk('delete')
+        url = crud_url_by_action_and_pk('delete')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
@@ -85,7 +85,7 @@ class PrivateTagViewsTests(TestCase):
 
     def test_tag_detail_GET(self):
         """Test retrieving Detail of Tag."""
-        url = url_by_action_and_pk('detail', self.tag.id)
+        url = crud_url_by_action_and_pk('detail', self.tag.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -93,7 +93,7 @@ class PrivateTagViewsTests(TestCase):
 
     def test_tag_update_GET(self):
         """Test retrieving Update of Tag."""
-        url = url_by_action_and_pk('update', self.tag.id)
+        url = crud_url_by_action_and_pk('update', self.tag.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -101,7 +101,7 @@ class PrivateTagViewsTests(TestCase):
 
     def test_tag_delete_GET(self):
         """Test retrieving Delete of Tag."""
-        url = url_by_action_and_pk('delete', self.tag.id)
+        url = crud_url_by_action_and_pk('delete', self.tag.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -112,7 +112,7 @@ class PrivateTagViewsTests(TestCase):
            For user which isn't the creator of the Tag."""
         self.login_as_another_user()
 
-        url = url_by_action_and_pk('update', self.tag.id)
+        url = crud_url_by_action_and_pk('update', self.tag.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -122,7 +122,7 @@ class PrivateTagViewsTests(TestCase):
            For user which isn't the creator of the Tag."""
         self.login_as_another_user()
 
-        url = url_by_action_and_pk('delete', self.tag.id)
+        url = crud_url_by_action_and_pk('delete', self.tag.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -131,7 +131,7 @@ class PrivateTagViewsTests(TestCase):
         """Test retrieving Update of Tag is always accessible for superuser."""
         self.login_as_superuser()
 
-        url = url_by_action_and_pk('update', self.tag.id)
+        url = crud_url_by_action_and_pk('update', self.tag.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -141,7 +141,7 @@ class PrivateTagViewsTests(TestCase):
         """Test retrieving Delete of Tag is accessible always for superuser."""
         self.login_as_superuser()
 
-        url = url_by_action_and_pk('delete', self.tag.id)
+        url = crud_url_by_action_and_pk('delete', self.tag.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

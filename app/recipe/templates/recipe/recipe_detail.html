@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Recipe Details</h1>
+
+  <div class="row">
+        <div class="col s12">
+          <div class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <img class="responsive-img circle detail-img"
+                     src="{{ recipe.image.url }}"
+                     alt="Recipe Image">
+                <h4>Title:</h4>
+                <p>{{ recipe.title }}</p>
+                <h4>Time to prepare:</h4>
+                <p>{{ recipe.time_minutes }} minutes</p>
+                <h4>Price:</h4>
+                <p>{{ recipe.price }}$</p>
+                <h4>Created By:</h4>
+                <p>{{ object.user.full_name|default_if_none:"No Name" }} ({{ object.user.email }})</p>
+                <h4>Creation Date:</h4>
+                <p>{{ object.created_on }}</p>
+              </div>
+
+              {% if user.id == object.user.id %}
+                <div class="card-action">
+                    <a href="{% url 'recipe:recipe_update' pk=object.id %}" class="btn waves-effect waves-light btn-color left-align">Edit
+                      <i class="material-icons right">edit</i>
+                    </a>
+                    <a href="{% url 'recipe:recipe_delete' pk=object.id %}" class="btn-floating btn waves-effect waves-light red right">
+                      <i class="material-icons right">delete</i>
+                    </a>
+                </div>
+              {% endif %}
+
+          </div>
+        </div>
+  </div>
+
+
+{% endblock %}

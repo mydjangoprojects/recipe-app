@@ -56,6 +56,8 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+MATERIALIZECSS_ICON_SET = 'fontawesome'
+
 # Django Rest-Auth's configuration
 # Documentation: https://django-rest-auth.readthedocs.io/
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None

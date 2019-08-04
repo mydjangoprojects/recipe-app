@@ -26,12 +26,15 @@
                         <li><a href="{% url 'about' %}">About</a></li>
                         <li><a href="{% url 'recipe:tag_list' %}">Tags</a></li>
                         <li><a href="{% url 'recipe:ingredient_list' %}">Ingredients</a></li>
+                        <li><a href="{% url 'recipe:recipe_list' %}">Recipes</a></li>
                     </ul>
+
                     {% if user.is_authenticated %}
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{% url 'logout' %}">Log Out</a></li>
                     </ul>
                     {% endif %}
+
                 </div>
             </div>
         </nav>
@@ -43,6 +46,7 @@
         <li class="btn-color"><a href="{% url 'about' %}">About</a></li>
         <li class="btn-color"><a href="{% url 'recipe:tag_list' %}">Tags</a></li>
         <li class="btn-color"><a href="{% url 'recipe:ingredient_list' %}">Ingredients</a></li>
+        <li class="btn-color"><a href="{% url 'recipe:recipe_list' %}">Recipes</a></li>
         {% if user.is_authenticated %}
         <li class="btn-color"><a href="{% url 'logout' %}">Log Out</a></li>
         {% endif %}
@@ -59,22 +63,29 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script>
-            // Sidenav
-            const sideNav = document.querySelector('.sidenav');
-            if (sideNav) {
-                M.Sidenav.init(sideNav, {});
-            }
+            $(document).ready(function(){
+                // Sidenav
+                const sideNav = document.querySelector('.sidenav');
+                if (sideNav) {
+                    M.Sidenav.init(sideNav, {});
+                }
 
-            // Slider
-            const slider = document.querySelector('.slider');
-            if (slider){
-                M.Slider.init(slider, {
-                    indicators: false,
-                    height: 500,
-                    transition: 500,
-                    interval: 6000
-                });
-            }
+                // Slider
+                const slider = document.querySelector('.slider');
+                if (slider){
+                    M.Slider.init(slider, {
+                        indicators: false,
+                        height: 500,
+                        transition: 500,
+                        interval: 6000
+                    });
+                }
+
+                // Initialize materialize data picker
+                $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+                $('select').formSelect();
+
+            });
         </script>
     </footer>
 </body>

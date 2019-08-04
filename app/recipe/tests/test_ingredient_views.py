@@ -8,7 +8,7 @@ from recipe.models import Ingredient
 INGREDIENT_LIST_URL = reverse('recipe:ingredient_list')
 
 
-def url_by_action_and_pk(action, pk=1):
+def crud_url_by_action_and_pk(action, pk=1):
     """Return Ingredient URL by Action and PK"""
     return reverse(f'recipe:ingredient_{action}', args=[pk])
 
@@ -26,21 +26,21 @@ class PublicIngredientViewsTests(TestCase):
 
     def test_ingredient_detail_redirects_unauthenticated(self):
         """Test that Ingredient Detail view redirects unauthenticated users."""
-        url = url_by_action_and_pk('detail')
+        url = crud_url_by_action_and_pk('detail')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
 
     def test_ingredient_update_redirects_unauthenticated(self):
         """Test that Ingredient Update view redirects unauthenticated users."""
-        url = url_by_action_and_pk('update')
+        url = crud_url_by_action_and_pk('update')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
 
     def test_ingredient_delete_redirects_unauthenticated(self):
         """Test that Ingredient Delete view redirects unauthenticated users."""
-        url = url_by_action_and_pk('delete')
+        url = crud_url_by_action_and_pk('delete')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
@@ -86,7 +86,7 @@ class PrivateIngredientViewsTests(TestCase):
 
     def test_ingredient_detail_GET(self):
         """Test retrieving Detail of Ingredient."""
-        url = url_by_action_and_pk('detail', self.ingredient.id)
+        url = crud_url_by_action_and_pk('detail', self.ingredient.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -94,7 +94,7 @@ class PrivateIngredientViewsTests(TestCase):
 
     def test_ingredient_update_GET(self):
         """Test retrieving Update of Ingredient."""
-        url = url_by_action_and_pk('update', self.ingredient.id)
+        url = crud_url_by_action_and_pk('update', self.ingredient.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -102,7 +102,7 @@ class PrivateIngredientViewsTests(TestCase):
 
     def test_ingredient_delete_GET(self):
         """Test retrieving Delete of Ingredient."""
-        url = url_by_action_and_pk('delete', self.ingredient.id)
+        url = crud_url_by_action_and_pk('delete', self.ingredient.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -113,7 +113,7 @@ class PrivateIngredientViewsTests(TestCase):
            For user which isn't the creator of the Ingredient."""
         self.login_as_another_user()
 
-        url = url_by_action_and_pk('update', self.ingredient.id)
+        url = crud_url_by_action_and_pk('update', self.ingredient.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -123,7 +123,7 @@ class PrivateIngredientViewsTests(TestCase):
            For user which isn't the creator of the Ingredient."""
         self.login_as_another_user()
 
-        url = url_by_action_and_pk('delete', self.ingredient.id)
+        url = crud_url_by_action_and_pk('delete', self.ingredient.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -133,7 +133,7 @@ class PrivateIngredientViewsTests(TestCase):
            for superuser."""
         self.login_as_superuser()
 
-        url = url_by_action_and_pk('update', self.ingredient.id)
+        url = crud_url_by_action_and_pk('update', self.ingredient.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -144,7 +144,7 @@ class PrivateIngredientViewsTests(TestCase):
            for superuser."""
         self.login_as_superuser()
 
-        url = url_by_action_and_pk('delete', self.ingredient.id)
+        url = crud_url_by_action_and_pk('delete', self.ingredient.id)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

@@ -5,9 +5,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from core.views import PaginatedListView
-from .models import Tag, Ingredient
+from .models import Tag, Ingredient, Recipe
 from .forms.tag_forms import TagModelForm
 from .forms.ingredient_forms import IngredientModelForm
+from .forms.recipe_forms import RecipeModelForm
 
 ##############
 # Tag Mixins #
@@ -127,3 +128,62 @@ class IngredientCreate(LoginRequiredMixin, CreateView):
         form.instance.user = user
         form.save()
         return super(IngredientCreate, self).form_valid(form)
+
+
+#################
+# Recipe Mixins #
+#################
+
+class RecipeUserPassesTestMixin(UserPassesTestMixin):
+
+    def test_func(self):
+        recipe = Recipe.objects.get(pk=self.kwargs['pk'])
+        req_user = self.request.user
+
+        if not req_user.is_staff or not req_user.is_superuser:
+            if recipe.user.id != req_user.id:
+                return False
+
+        return True
+
+
+################
+# Recipe Views #
+################
+
+class RecipeList(LoginRequiredMixin, PaginatedListView):
+    model = Recipe
+    queryset = Recipe.objects.all()
+    template_name = 'recipe/recipe_list.html'
+
+
+class RecipeDetail(LoginRequiredMixin, DetailView):
+    model = Recipe
+    template_name = 'recipe/recipe_detail.html'
+
+
+class RecipeUpdate(LoginRequiredMixin, RecipeUserPassesTestMixin, UpdateView):
+    model = Recipe
+    form_class = RecipeModelForm
+    template_name = 'recipe/recipe_update.html'
+    success_url = reverse_lazy('recipe:recipe_list')
+
+
+class RecipeDelete(LoginRequiredMixin, RecipeUserPassesTestMixin, DeleteView):
+    model = Recipe
+    template_name = 'recipe/recipe_delete.html'
+    success_url = reverse_lazy('recipe:recipe_list')
+
+
+class RecipeCreate(LoginRequiredMixin, CreateView):
+    model = Recipe
+    form_class = RecipeModelForm
+    template_name = 'recipe/recipe_create.html'
+    success_url = reverse_lazy('recipe:recipe_list')
+
+    def form_valid(self, form):
+        form.save(commit=False)
+        user = self.request.user
+        form.instance.user = user
+        form.save()
+        return super(RecipeCreate, self).form_valid(form)
