@@ -40,14 +40,27 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    # Rest Framework
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'rest_auth.registration',
+
+    # Allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'rest_auth.registration',
+
+    # Allauth Social Accounts
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.linkedin',
+    'allauth.socialaccount.providers.twitter',
+
 ]
+
+# Django Site's Configuration
+SITE_ID = 1
 
 LOCAL_APPS = [
     'core',
@@ -94,8 +107,6 @@ REST_FRAMEWORK = {
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Django Site's Configuration
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,7 +123,8 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'templates', 'allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

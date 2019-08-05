@@ -29,12 +29,13 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('about/', TemplateView.as_view(template_name='about.html'),
          name='about'),
+    path('login/', BaseLoginView.as_view(), name='login'),
+    path('accounts/', include('allauth.urls')),
+
+    # API
     path('api/recipe/', include('recipe.api.urls')),
     path('api/rest-auth/', include('rest_auth.urls')),
     path('api/rest-auth/login/', LoginView.as_view(), name='rest_login'),
     path('api/rest-auth/registration/', include('rest_auth.registration.urls'),
          name='rest_register'),
-    path('login/', BaseLoginView.as_view(), name='login'),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('core.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

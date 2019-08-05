@@ -2,12 +2,11 @@ from django.forms import (
     ModelMultipleChoiceField,
     CharField, FloatField,
     ImageField, IntegerField,
-
-    TextInput, FileInput,
-    NumberInput, ModelForm,
+    TextInput, NumberInput,
+    ModelForm,
 )
 
-from recipe.models import Recipe, Tag, Ingredient, recipe_image_file_path
+from recipe.models import Recipe, Tag, Ingredient
 
 
 class RecipeModelForm(ModelForm):

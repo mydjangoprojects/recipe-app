@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{% static 'common-styles.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Average&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
 <body>
     <!-- HEADER -->
@@ -31,7 +33,7 @@
 
                     {% if user.is_authenticated %}
                     <ul class="right hide-on-med-and-down">
-                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                        <li><a href="{% url 'account_logout' %}">Log Out</a></li>
                     </ul>
                     {% endif %}
 
@@ -48,7 +50,7 @@
         <li class="btn-color"><a href="{% url 'recipe:ingredient_list' %}">Ingredients</a></li>
         <li class="btn-color"><a href="{% url 'recipe:recipe_list' %}">Recipes</a></li>
         {% if user.is_authenticated %}
-        <li class="btn-color"><a href="{% url 'logout' %}">Log Out</a></li>
+        <li class="btn-color"><a href="{% url 'account_logout' %}">Log Out</a></li>
         {% endif %}
     </ul>
 

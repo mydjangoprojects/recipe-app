@@ -39,13 +39,17 @@
 
 {% else %}
 
-  <h3>You are not logged in</h3>
-    <a href="{% url 'login'  %}" class="btn btn-color">
-      Login
-    </a>
-    <a href="{% url 'signup'  %}" class="btn btn-color">
-      SignUp
-    </a>
+  <div class="container">
+    <div class="wrapper" style="text-align: center;">
+        <h3>You are not logged in?</h3>
+        <a href="{% url 'account_login'  %}" class="btn btn-color">
+          Login
+        </a>
+        <a href="{% url 'account_signup'  %}" class="btn btn-color">
+          SignUp
+        </a>
+    </div>
+  </div>
 
 {% endif %}
 {% endblock %}

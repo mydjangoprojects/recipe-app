@@ -37,3 +37,52 @@
     max-width: 350px;
     max-height: 350px;
 }
+
+ul.socialaccount_providers {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    text-align: center;
+}
+
+li.soc-acc-item {
+    list-style: none;
+    transition: 1s;
+}
+
+a.soc-acc-link {
+    display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #fff;
+    margin: 0 2px;
+    border-radius: 50%;
+    font-size: 30px;
+}
+
+a.google {
+    background-color: #dd4b39;
+}
+
+a.twitter {
+    background-color: #55acee;
+}
+
+a.linkedin {
+    background-color: #0077B5;
+}
+
+a.facebook {
+    background-color: #3b5999;
+}
+
+a.github {
+    background-color: #000000;
+}
+
+p {
+    font-weight: bold;
+    font-size: 19px;
+}
